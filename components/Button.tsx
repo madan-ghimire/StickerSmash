@@ -4,10 +4,16 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 type Props = {
   label: string;
   theme?: "primary";
+  icon?: keyof typeof FontAwesome.glyphMap; // 👈 any FontAwesome icon name
   onPress?: () => void;
 };
 
-export default function Button({ label, theme, onPress }: Props) {
+export default function Button({
+  label,
+  theme,
+  onPress,
+  icon = "picture-o",
+}: Props) {
   if (theme === "primary") {
     return (
       <View
@@ -21,11 +27,12 @@ export default function Button({ label, theme, onPress }: Props) {
           onPress={onPress}
         >
           <FontAwesome
-            name="picture-o"
+            name={icon}
             size={18}
             color="#25292e"
             style={styles.buttonIcon}
           />
+
           <Text style={[styles.buttonLabel, { color: "#25292e" }]}>
             {label}
           </Text>
