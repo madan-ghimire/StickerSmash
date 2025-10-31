@@ -51,6 +51,27 @@ export default function Index() {
     }
   };
 
+  // 📸 Take photo with camera
+  const takePhotoAsync = async () => {
+    const permission = await ImagePicker.requestCameraPermissionsAsync();
+    if (!permission.granted) {
+      alert("Camera permission is required to take a photo!");
+      return;
+    }
+
+    const result = await ImagePicker.launchCameraAsync({
+      allowsEditing: true,
+      quality: 1,
+    });
+
+    if (!result.canceled) {
+      setSelectedImage(result.assets[0].uri);
+      setShowAppOptions(true);
+    } else {
+      alert("You did not take any photo.");
+    }
+  };
+
   const onReset = () => {
     setShowAppOptions(false);
   };
@@ -130,6 +151,11 @@ export default function Index() {
             theme="primary"
             label="Choose a photo"
             onPress={pickImageAsync}
+          />
+          <Button
+            theme="primary"
+            label="Take a photo"
+            onPress={takePhotoAsync}
           />
           <Button
             label="Use this photo"
